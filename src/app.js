@@ -6,7 +6,8 @@ const centerRoutes = require("./routes/centerRoutes");
 const locationRoutes = require("./routes/locationRoutes");
 const departmentRoutes = require("./routes/departmentRoutes");
 const assetCategoryRoutes = require("./routes/assetCategoryRoutes");
-
+const supplierRoutes = require("./routes/supplierRoutes");
+const itemGrnRoutes = require("./routes/itemGrnRoutes");
 const app = express();
 
 // Middleware
@@ -59,6 +60,8 @@ app.use("/api/centers", centerRoutes);
 app.use("/api/locations", locationRoutes);
 app.use("/api/departments", departmentRoutes);
 app.use("/api/asset-categories", assetCategoryRoutes);
+app.use("/api/supplier", supplierRoutes);
+app.use("/api/item-grn", itemGrnRoutes);
 
 // 404 handler
 app.use((req, res) => {
