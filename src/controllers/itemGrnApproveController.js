@@ -27,32 +27,43 @@ const ItemGrnApproveController = {
 
       const [rows] = await pool.execute(
         `
-        SELECT 
-            i.*,
-            (SELECT JSON_ARRAYAGG(f.file_path)
-            FROM item_grn_files f
-            WHERE f.item_grn_id = i.id) AS file_paths,
-            (SELECT JSON_ARRAYAGG(JSON_OBJECT(
-                'id', d.id,
-                'item_grn_id', d.item_grn_id,
-                'center', d.center,
-                'location', d.location,
-                'department', d.department,
-                'employee', d.employee,
-                'serial_no', d.serial_no,
-                'book_no_local_id', d.book_no_local_id,
-                'barcode_no', d.barcode_no,
-                'status', d.status,
-                'created_at', d.created_at
-            ))
-            FROM item_grn_details d
-            WHERE d.item_grn_id = i.id
-            ) AS details
-        FROM item_grn i
-        WHERE i.grn_no = ?;
+       SELECT 
+    i.*,
+    (SELECT JSON_ARRAYAGG(f.file_path)
+     FROM item_grn_files f
+     WHERE f.item_grn_id = i.id) AS file_paths,
+    (SELECT JSON_ARRAYAGG(JSON_OBJECT(
+        'id', d.id,
+        'item_grn_id', d.item_grn_id,
+        'center_id', d.center,
+        'center_name', c.center_name,
+        'location_id', d.location,
+        'location_name', l.location_name,
+        'department', d.department,
+        'department_name', dep.department_name,
+        'employee', d.employee,
+        'employee_name', e.employee_name,
+        'serial_no', d.serial_no,
+        'book_no_local_id', d.book_no_local_id,
+        'barcode_no', d.barcode_no,
+        'status', d.status,
+        'created_at', d.created_at
+    ))
+     FROM item_grn_details d
+     LEFT JOIN centers c ON c.id = d.center
+     LEFT JOIN locations l ON l.id = d.location
+     LEFT JOIN employees e ON e.id = d.employee
+     LEFT JOIN departments dep ON dep.id = d.department
+     WHERE d.item_grn_id = i.id
+    ) AS details
+FROM item_grn i
+WHERE i.grn_no = ?;
+
         `,
         [grnNo]
       );
+
+      console.log("rows", rows)
 
       res.status(200).json({ success: true, data: rows });
 
