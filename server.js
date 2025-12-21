@@ -35,6 +35,16 @@ app.listen(PORT, async () => {
   console.log("   POST /api/departments");
   console.log("   GET  /api/asset-categories");
   console.log("   POST /api/asset-categories");
+  console.log("   GET  /api/item-grn");
+  console.log("   POST /api/item-grn");
+  console.log("   GET  /api/item-grn/stats");
+  console.log("   GET  /api/item-grn/generate-grn");
+  console.log("   GET  /api/item-grn/:id");
+  console.log("   PUT  /api/item-grn/:id");
+  console.log("   DELETE /api/item-grn/:id");
+  console.log("   POST /api/item-grn/:id/files");
+  console.log("   GET  /api/item-grn/:id/files");
+  console.log("   DELETE /api/item-grn/files/:id");
   console.log("");
 
   // Test database connection
