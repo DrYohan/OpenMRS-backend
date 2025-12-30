@@ -9,7 +9,8 @@ const locationRoutes = require("./routes/locationRoutes");
 const departmentRoutes = require("./routes/departmentRoutes");
 const assetCategoryRoutes = require("./routes/assetCategoryRoutes");
 const itemGRNRoutes = require("./routes/itemGRNRoutes");
-
+const supplierRoutes = require("./routes/supplierRoutes");
+const itemGrnApproveRoutes = require('./routes/itemGrnApproveRoutes')
 const app = express();
 
 // Middleware - IMPORTANT: Add body parsers BEFORE routes
@@ -82,6 +83,9 @@ app.use("/api/locations", locationRoutes);
 app.use("/api/departments", departmentRoutes);
 app.use("/api/asset-categories", assetCategoryRoutes);
 app.use("/api/item-grn", itemGRNRoutes);
+app.use("/api/item-grn-approve", itemGrnApproveRoutes)
+app.use("/api/supplier", supplierRoutes);
+
 
 // 404 handler
 app.use((req, res) => {
