@@ -77,16 +77,41 @@ router.post("/test-multer", uploadMiddleware, (req, res) => {
   });
 });
 
-// Item GRN Routes
+// =================== ITEM GRN ROUTES ===================
+
+// CREATE and READ
 router.post("/", uploadMiddleware, ItemGRNController.createItemGRN);
 router.get("/", ItemGRNController.getAllItemGRNs);
+router.get("/search/browse", ItemGRNController.searchItemGRNs);
 router.get("/stats", ItemGRNController.getStats);
+
+// GRN Number related
 router.get("/generate-grn", ItemGRNController.generateGRNNo);
+router.get("/grn-numbers", ItemGRNController.getExistingGrnNumbers);
+router.get("/by-grn/:grn_no", ItemGRNController.getItemGRNByGrnNo);
+
+// CRUD by ID
 router.get("/:id", ItemGRNController.getItemGRNById);
 router.put("/:id", ItemGRNController.updateItemGRN);
 router.delete("/:id", ItemGRNController.deleteItemGRN);
 
-// File Routes
+// Update all items by GRN
+router.put(
+  "/by-grn/:grn_no/update-all",
+  uploadMiddleware,
+  ItemGRNController.updateAllByGrnNo
+);
+
+// Image related routes
+router.get("/:id/check-images", ItemGRNController.checkItemHasImages);
+router.get("/:id/images/:imageNumber", ItemGRNController.serveImageFile);
+router.get("/:id/images/:imageNumber/view", ItemGRNController.getItemImage);
+
+// Test routes (can remove in production)
+router.get("/search/test", ItemGRNController.testSearch);
+router.get("/test/simple", ItemGRNController.testSimpleQuery);
+
+// =================== FILE ROUTES ===================
 router.post("/:id/files", uploadMiddleware, FileUploadController.addFiles);
 router.get("/:id/files", FileUploadController.getFilesByItemGRN);
 router.delete("/files/:id", FileUploadController.deleteFile);

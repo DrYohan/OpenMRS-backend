@@ -12,6 +12,10 @@
     "cors": "^2.8.5",
     "dotenv": "^16.6.1",
     "express": "^4.22.1",
+    "jsreport": "^4.10.1",
+    "jsreport-chrome-pdf": "^1.10.0",
+    "jsreport-core": "^2.10.1",
+    "jsreport-handlebars": "^2.1.0",
     "multer": "^2.0.2",
     "mysql2": "^3.15.3",
     "sequelize": "^6.37.7"

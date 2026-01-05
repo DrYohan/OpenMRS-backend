@@ -2,6 +2,8 @@ require("dotenv").config();
 const app = require("./src/app");
 const pool = require("./src/config/database");
 const itemGRNRoutes = require("../OpenMRS backend/src/routes/itemGRNRoutes");
+const supplierRoutes = require("../OpenMRS backend/src/routes/supplierRoutes");
+app.use("/api/suppliers", supplierRoutes);
 
 const PORT = process.env.PORT || 3000;
 
