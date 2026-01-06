@@ -12,6 +12,8 @@ const itemGRNRoutes = require("./routes/itemGRNRoutes");
 const supplierRoutes = require("./routes/supplierRoutes");
 const itemGrnApproveRoutes = require('./routes/itemGrnApproveRoutes')
 const reportRoutes = require('./routes/reportRoutes');
+const vehicleRoutes = require("./routes/vehicleRoutes");
+const stationRoutes = require("./routes/stationRoutes");
 const app = express();
 
 // Middleware - IMPORTANT: Add body parsers BEFORE routes
@@ -25,6 +27,9 @@ if (!fs.existsSync(uploadsDir)) {
   fs.mkdirSync(uploadsDir, { recursive: true });
 }
 app.use("/uploads", express.static(uploadsDir));
+
+const BASE_UPLOAD_DIR = path.join(__dirname, "../base_uploads");
+app.use("/base_uploads", express.static(BASE_UPLOAD_DIR));
 
 // Welcome route
 app.get("/", (req, res) => {
@@ -87,6 +92,8 @@ app.use("/api/item-grn", itemGRNRoutes);
 app.use("/api/item-grn-approve", itemGrnApproveRoutes)
 app.use("/api/report", reportRoutes);
 app.use("/api/supplier", supplierRoutes);
+app.use("/api/vehicle", vehicleRoutes);
+app.use("/api/station", stationRoutes);
 
 
 // 404 handler
