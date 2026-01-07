@@ -116,6 +116,4 @@ router.post("/:id/files", uploadMiddleware, FileUploadController.addFiles);
 router.get("/:id/files", FileUploadController.getFilesByItemGRN);
 router.delete("/files/:id", FileUploadController.deleteFile);
 
-//test
-
 module.exports = router;
