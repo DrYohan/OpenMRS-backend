@@ -1,4 +1,4 @@
-const ItemGRNFileModel = require("../models/itemGRNFileModel.js");
+const ItemGRNFileModel = require("../models/itemGRNFileModel");
 const ItemGRNModel = require("../models/itemGRNModel");
 const { deleteFile } = require("../utils/helpers");
 const pool = require("../config/database");

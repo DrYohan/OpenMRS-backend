@@ -1,11 +1,7 @@
 require("dotenv").config();
 const app = require("./src/app");
 const pool = require("./src/config/database");
-//const itemGRNRoutes = require("../OpenMRS-backend/src/routes/itemGrnRoutes");
-//const supplierRoutes = require("../OpenMRS backend/src/routes/supplierRoutes");
-const supplierRoutes = require('./src/routes/supplierRoutes');
-
-app.use("/api/suppliers", supplierRoutes);
+const itemGRNRoutes = require("./src/routes/itemGRNRoutes");
 
 const PORT = process.env.PORT || 3000;
 
@@ -26,7 +22,7 @@ async function testDatabaseConnection() {
   }
 }
 
-//app.use("/api/item-grn", itemGRNRoutes);
+app.use("/api/item-grn", itemGRNRoutes);
 
 // Start server
 app.listen(PORT, async () => {

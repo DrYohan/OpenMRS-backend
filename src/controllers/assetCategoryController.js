@@ -457,8 +457,9 @@ const assetCategoryController = {
   // Get sub categories by middle category
   async getSubCategoriesByMiddleCategory(req, res) {
     try {
+ 
       const { middle_category_id } = req.params;
-
+     console.log("comming getSubCategoriesByMiddleCategory", middle_category_id)
       const categories = await AssetCategory.getSubCategoriesByMiddleCategory(
         middle_category_id
       );
@@ -473,6 +474,23 @@ const assetCategoryController = {
       res.status(500).json({ error: "Internal server error" });
     }
   },
+
+  async getMiddleCategoriesByStation(req, res){
+    const {stationId} = req.params;
+    console.log("appi called station", stationId);
+    try {
+      const [row] = await pool.execute(
+        `SELECT m.middle_category, f.middle_category_name
+         FROM vehicles_master m
+         JOIN fixed_assest_middle_category f ON f.middle_category_id = m.middle_category
+         WHERE m.status = 1 AND m.station_name = ?`,
+        [stationId]
+      );
+      res.json({success: true, data: row,});
+    } catch (error) {
+      
+    }
+  }
 };
 
 module.exports = assetCategoryController;

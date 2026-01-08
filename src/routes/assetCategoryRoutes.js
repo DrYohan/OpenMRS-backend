@@ -40,5 +40,7 @@ router.get(
   "/sub-categories/middle-category/:middle_category_id",
   assetCategoryController.getSubCategoriesByMiddleCategory
 );
+router.get("/middle-categories/:stationId", assetCategoryController.getMiddleCategoriesByStation);
+
 
 module.exports = router;

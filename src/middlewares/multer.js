@@ -10,23 +10,27 @@ if (!fs.existsSync(BASE_UPLOAD_DIR)) {
   fs.mkdirSync(BASE_UPLOAD_DIR, { recursive: true });
 }
 
-// Dynamic storage
+// Multer storage
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    const folderName = req.uploadFolder || "common";
+    // Dynamic folder based on field name
+    let folderName = "common";
+
+    if (file.fieldname === "files") folderName = "building/land_image";
+    if (file.fieldname === "deedCopy") folderName = "building/deed_copy";
+    if (file.fieldname === "buildingFiles") folderName = "building_uploads";
+
+
     const uploadPath = path.join(BASE_UPLOAD_DIR, folderName);
 
-    // Create folder dynamically (vehicle, rooms, etc.)
-    if (!fs.existsSync(uploadPath)) {
-      fs.mkdirSync(uploadPath, { recursive: true });
-    }
+    // Create folder if not exists
+    if (!fs.existsSync(uploadPath)) fs.mkdirSync(uploadPath, { recursive: true });
 
     cb(null, uploadPath);
   },
 
   filename: (req, file, cb) => {
-    const uniqueSuffix =
-      Date.now() + "-" + Math.round(Math.random() * 1e9);
+    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
     const ext = path.extname(file.originalname);
     cb(null, `${file.fieldname}-${uniqueSuffix}${ext}`);
   },
@@ -35,16 +39,11 @@ const storage = multer.diskStorage({
 // Image-only filter
 const fileFilter = (req, file, cb) => {
   const allowedTypes = /jpeg|jpg|png|gif|bmp|webp/;
-  const extname = allowedTypes.test(
-    path.extname(file.originalname).toLowerCase()
-  );
+  const extname = allowedTypes.test(path.extname(file.originalname).toLowerCase());
   const mimetype = allowedTypes.test(file.mimetype);
 
-  if (mimetype && extname) {
-    cb(null, true);
-  } else {
-    cb(new Error("Only image files are allowed"));
-  }
+  if (mimetype && extname) cb(null, true);
+  else cb(new Error("Only image files are allowed"));
 };
 
 // Multer instance
@@ -54,15 +53,4 @@ const upload = multer({
   limits: { fileSize: 5 * 1024 * 1024 }, // 5MB
 });
 
-// 🔹 Export reusable middlewares
-module.exports = {
-  uploadArray: (folder) => (req, res, next) => {
-    req.uploadFolder = folder;
-    upload.array("files", 4)(req, res, next);
-  },
-
-  uploadSingle: (folder) => (req, res, next) => {
-    req.uploadFolder = folder;
-    upload.single("file")(req, res, next);
-  },
-};
+module.exports = { upload };

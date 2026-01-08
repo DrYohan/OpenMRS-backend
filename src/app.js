@@ -10,10 +10,12 @@ const departmentRoutes = require("./routes/departmentRoutes");
 const assetCategoryRoutes = require("./routes/assetCategoryRoutes");
 const itemGRNRoutes = require("./routes/itemGRNRoutes");
 const supplierRoutes = require("./routes/supplierRoutes");
-const itemGrnApproveRoutes = require('./routes/itemGrnApproveRoutes')
-const reportRoutes = require('./routes/reportRoutes');
+const itemGrnApproveRoutes = require('./routes/itemGrnApproveRoutes');
 const vehicleRoutes = require("./routes/vehicleRoutes");
 const stationRoutes = require("./routes/stationRoutes");
+const landRoutes = require("./routes/landRoutes");
+const buildingRoutes = require("./routes/buildingRoutes");
+
 const app = express();
 
 // Middleware - IMPORTANT: Add body parsers BEFORE routes
@@ -30,6 +32,7 @@ app.use("/uploads", express.static(uploadsDir));
 
 const BASE_UPLOAD_DIR = path.join(__dirname, "../base_uploads");
 app.use("/base_uploads", express.static(BASE_UPLOAD_DIR));
+
 
 // Welcome route
 app.get("/", (req, res) => {
@@ -90,11 +93,11 @@ app.use("/api/departments", departmentRoutes);
 app.use("/api/asset-categories", assetCategoryRoutes);
 app.use("/api/item-grn", itemGRNRoutes);
 app.use("/api/item-grn-approve", itemGrnApproveRoutes)
-app.use("/api/report", reportRoutes);
 app.use("/api/supplier", supplierRoutes);
 app.use("/api/vehicle", vehicleRoutes);
 app.use("/api/station", stationRoutes);
-
+app.use("/api/land", landRoutes); 
+app.use("/api/building", buildingRoutes);
 
 // 404 handler
 app.use((req, res) => {

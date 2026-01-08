@@ -3,15 +3,21 @@ const path = require("path");
 const fs = require("fs");
 
 // Create uploads directory if it doesn't exist
-const uploadDir = "uploads";
-if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir, { recursive: true });
+const baseUploadDir  = "uploads";
+if (!fs.existsSync(baseUploadDir )) {
+  fs.mkdirSync(baseUploadDir , { recursive: true });
 }
 
-// Configure storage
+// Dynamic storage
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, uploadDir);
+    const folderName = req.uploadFolder || "common";
+    const uploadPath = path.join(baseUploadDir, folderName);
+    // Create folder if not exists
+    if (!fs.existsSync(uploadPath)) {
+      fs.mkdirSync(uploadPath, { recursive: true });
+    }
+    cb(null, uploadPath);
   },
   filename: function (req, file, cb) {
     // Create unique filename
