@@ -33,6 +33,9 @@ const BuildingController = {
         // Prepare SQL INSERT for buildings table
         const sql = `
         INSERT INTO buildings (
+            main_category_id,
+            middle_category_id,
+            sub_category_id,
             land_id,
             building_id,
             building_name,
@@ -46,10 +49,13 @@ const BuildingController = {
             building_images,
             station,
             status
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         `;
 
         const values = [
+        data.mainCategoryId || null,
+        data.middleCategoryId || null,
+        data.subCategoryId || null,
         data.landId || null,
         data.buildingId || null,
         data.buildingName || null,
@@ -154,6 +160,9 @@ const BuildingController = {
             // ---------------- UPDATE DATABASE ----------------
             const sql = `
                 UPDATE buildings SET
+                    main_category_id = ?,
+                    middle_category_id = ?,
+                    sub_category_id = ?,
                     land_id = ?,
                     building_name = ?,
                     address = ?,
@@ -171,6 +180,9 @@ const BuildingController = {
 
             // Use current values if not provided in request
             const values = [
+                data.mainCategoryId ?? current.main_category_id,
+                data.middleCategoryId ?? current.middle_category_id,
+                data.subCategoryId ?? current.sub_category_id,
                 data.landId ?? current.land_id,
                 data.buildingName ?? current.building_name,
                 data.address ?? current.address,

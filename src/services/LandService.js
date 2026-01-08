@@ -3,9 +3,7 @@ const LandRepository = require("../repository/landRepository");
 const landService = {
   async createBuilding(data, files) {
     try {
-      // You can process files here if needed
       return await LandRepository.registerBuildingData(data,files);
-
     } catch (error) {
       console.error("Error in creating building (service):", error);
       throw error;
