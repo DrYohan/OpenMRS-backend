@@ -8,10 +8,7 @@ const LandController = {
             const files = req.files;
             const isExist = await LandService.isLandIdExists(data.landId);
             if (isExist) {
-              return res.status(409).json({
-                success: false,
-                message: "Land ID already exists"
-              });
+              return res.status(409).json({ success: false, message: "Land ID already exists"});
             }
             // Multiple land images
             const landImages = files?.files?.map(f => f.path.replace(/\\/g, "/")) || [];
@@ -22,10 +19,6 @@ const LandController = {
             if (deedCopyFile) {
               data.deedCopyPath = deedCopyFile.path.replace(/\\/g, "/");
             }
-
-            console.log("Land images:", data.buildingImages);
-            console.log("Deed copy:", data.deedCopyPath);
-
             const result = await LandService.createBuilding(data, files);
             return res.status(201).json({
               success: true,
