@@ -82,7 +82,7 @@ class ItemGRNModel {
       GrnNo: itemGRNData.grn_no || "",
       GRNdate: itemGRNData.grn_date ? new Date(itemGRNData.grn_date) : null,
       CDate: new Date(),
-      Status: "Active",
+      Status: 1,
       CBy: 1,
       ReplicateFlag: itemGRNData.replicate || 0,
       X: itemGRNData.location || null,

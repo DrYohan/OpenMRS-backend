@@ -3,9 +3,9 @@ const path = require("path");
 const fs = require("fs");
 
 // Create uploads directory if it doesn't exist
-const baseUploadDir  = "uploads";
-if (!fs.existsSync(baseUploadDir )) {
-  fs.mkdirSync(baseUploadDir , { recursive: true });
+const baseUploadDir = "uploads";
+if (!fs.existsSync(baseUploadDir)) {
+  fs.mkdirSync(baseUploadDir, { recursive: true });
 }
 
 // Dynamic storage
