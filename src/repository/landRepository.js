@@ -184,6 +184,18 @@ const landRepository = {
       throw error;
     }
   },
+
+  async getAllLands() {
+    try {
+      const sql = `
+        SELECT * FROM lands
+      `;
+      return pool.execute(sql);
+    } catch (error) {
+      console.error("Error fetching all lands:", error);
+      throw error;
+    }
+  },
 };
 
 module.exports = landRepository;

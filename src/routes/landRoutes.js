@@ -12,6 +12,7 @@ router.post(
   LandController.createBuildingRecord
 );
 
+router.get("/all", LandController.getAllLands);
 router.get("/landId", LandController.fetchAllLandId);
 router.get("/:landId", LandController.fetchDataBylandId);
 router.put(

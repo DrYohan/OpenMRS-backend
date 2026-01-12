@@ -3,7 +3,7 @@ const LandRepository = require("../repository/landRepository");
 const landService = {
   async createBuilding(data, files) {
     try {
-      return await LandRepository.registerBuildingData(data,files);
+      return await LandRepository.registerBuildingData(data, files);
     } catch (error) {
       console.error("Error in creating building (service):", error);
       throw error;
@@ -17,7 +17,7 @@ const landService = {
       console.error("Error in creating building (service):", error);
       throw error;
     }
-  },  
+  },
 
   async fetchRecordByLandId(landId) {
     try {
@@ -27,7 +27,7 @@ const landService = {
       console.error("Error in creating building (service):", error);
       throw error;
     }
-  },  
+  },
 
   async updateData(landId, data, files) {
     try {
@@ -41,10 +41,8 @@ const landService = {
       }
 
       if (files?.files?.length) {
-        const newImages = files.files.map(f => f.path).join("@@@");
-        landImages = landImages
-          ? `${landImages}@@@${newImages}`
-          : newImages;
+        const newImages = files.files.map((f) => f.path).join("@@@");
+        landImages = landImages ? `${landImages}@@@${newImages}` : newImages;
       }
 
       /* ---------- DEED COPY ---------- */
@@ -64,15 +62,20 @@ const landService = {
     }
   },
 
-  async isLandIdExists(landId){
+  async isLandIdExists(landId) {
     try {
-      return await LandRepository.landIdExists(landId)
-      
-    } catch (error) {
-      
-    }
-  }
+      return await LandRepository.landIdExists(landId);
+    } catch (error) {}
+  },
 
+  async getAllLands() {
+    try {
+      return await LandRepository.getAllLands();
+    } catch (error) {
+      console.error("Error fetching all lands (service):", error);
+      throw error;
+    }
+  },
 };
 
 module.exports = landService;
